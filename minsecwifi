@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# (C) 2015 Cryptopunks.org <Xa2ee at cryptopunks dot org>
+
+# Minimalistic and secure Wifi manager 
+
+# Needed packages: openvpn wpasupplicant macchanger
+
+if [ -f config ]; then
+. ./config
+else 
+    echo -e "I need configuration file \"minsecwifi.conf\".\n"
+    echo -e "Please run:\n\n$ wget https://raw.githubusercontent.com/cryptopunks/minsecwifi/master/minsecwifi.conf.sample --no-check-certificate -O minsecwifi.conf"
+    echo -e "$ mv minsecwifi.conf.sample minsecwifi.conf\n"
+    echo "and edit \"minsecwifi.conf\""
+    exit
+fi
+
+# killing old processes
+(kill -9 `ps aux | grep openvpn | awk {'print $2'}`) 2> /dev/null
+(kill -9 `ps aux | grep wpa_supplicant | awk {'print $2'}`) 2> /dev/null
+(kill -9 `ps aux | grep dhclient | awk {'print $2'}`) 2> /dev/null
+
+echo "Unblock Wifi-device: "
+rfkill unblock 0 && echo OK
+
+echo "Wifi interface down: "
+ifconfig $WIFI_DEV down && echo OK
+
+echo "Change MAC-address: "
+macchanger -r  $WIFI_DEV && echo OK
+
+echo "Wifi interface up:"
+ifconfig $WIFI_DEV up && echo OK
+
+echo "Connecting Wifi: "
+rm -f /var/run/wpa/$WIFI_DEV
+wpa_supplicant -B -i $WIFI_DEV -c $WPA_CONF && echo OK
+
+echo "Get DHCP address:"
+dhclient $WIFI_DEV && echo OK
+
+echo "Rewrite DNS: "
+echo -e $DNS > /etc/resolv.conf
+echo OK
+
+echo "Connecting VPN: "
+openvpn --config $OVPN_CONF && echo OK

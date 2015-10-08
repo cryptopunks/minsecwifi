@@ -1,0 +1,8 @@
+# Wifi device (run `ifconfig -a`)
+WIFI_DEV="wlp3s0"
+# Wpa_supplicant configuration file
+WPA_CONF="/etc/wpa_supplicant/wpa_supplicant.conf"
+# DNS-servers
+DNS="nameserver 208.67.222.222\nnameserver 208.67.220.220"
+# OpenVPN configuration file (for client)
+OVPN_CONF="/etc/openvpn/client.ovpn"
