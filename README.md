@@ -2,18 +2,19 @@
 
 ### Description
 
-Minimalistic and secure Wifi-manager based by wpa_supplicant, openvpn and macchanger.
+Minimalistic and secure Wifi-manager based by **wpa_supplicant**, **openvpn** and **macchanger**.
 
 ## Installation and setup 
 
 ```
 $ sudo apt-get install openvpn wpasupplicant macchanger 
 $ git clone https://github.com/cryptopunks/minsecwifi
-$ cd minsecwifi && mv minsecwifi.conf.sample minsecwifi.conf # (edit "minsecwifi.conf")
+$ cd minsecwifi && mv minsecwifi.conf.sample minsecwifi.conf
 
 ```
+and edit "minsecwifi.conf".
 
-Creating */etc/wpa_supplicant/wpa_supplicant.conf* in the following format:
+Creating **/etc/wpa_supplicant/wpa_supplicant.conf** in the following format:
 
 ```
 network={
@@ -31,7 +32,7 @@ Assign access rights:
 $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-and run *minsecwifi*:
+and run **minsecwifi**:
 
 ```
 $ sudo ./minsecwifi
