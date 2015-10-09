@@ -6,13 +6,18 @@
 
 # Needed packages: openvpn wpasupplicant macchanger
 
-if [ -f config ]; then
-. ./config
+if [ -f minsecwifi.conf ]; then
+. ./minsecwifi.conf
 else 
     echo -e "I need configuration file \"minsecwifi.conf\".\n"
     echo -e "Please run:\n\n$ wget https://raw.githubusercontent.com/cryptopunks/minsecwifi/master/minsecwifi.conf.sample --no-check-certificate -O minsecwifi.conf"
     echo -e "$ mv minsecwifi.conf.sample minsecwifi.conf\n"
     echo "and edit \"minsecwifi.conf\""
+    exit
+fi
+
+if [[ "$USER" != 'root' ]]; then
+    echo "Sorry, you need to run this as root"
     exit
 fi
 
