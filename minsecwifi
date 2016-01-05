@@ -1,10 +1,29 @@
 #!/bin/sh
 
-# (C) 2015 Cryptopunks.org <Xa2ee at cryptopunks dot org>
+# (C) 2015-2016 Cryptopunks.org <Xa2ee at cryptopunks dot org>
 
 # Minimalistic and secure Wifi manager 
 
 # Needed packages: openvpn wpasupplicant macchanger
+
+MINSECWIFI_CONF="minsecwifi.conf"
+
+if [ ! $EDITOR ]; then
+    EDITOR=vim
+fi
+
+usage() {
+        echo "Usage:"
+        echo "$0 -s [scan networks] -r [reconnect] -es [edit wpa_supplicant.conf] -em [edit minsecwifi.conf]"
+        exit
+}
+
+checkperm() {
+    if [[ "$USER" != 'root' ]]; then
+        echo "Sorry, you need to run this as root"
+        exit
+    fi
+}
 
 if [ -f minsecwifi.conf ]; then
 . ./minsecwifi.conf
@@ -16,9 +35,27 @@ else
     exit
 fi
 
-if [[ "$USER" != 'root' ]]; then
-    echo "Sorry, you need to run this as root"
+
+if [ $# -ne 1 ]; then
+    usage
+fi
+
+if [ $1 = "-s" ]; then
+    checkperm
+    iw dev $WIFI_DEV scan | grep -i ssid
     exit
+elif [ $1 = "-r" ]; then
+    checkperm
+    echo "Reconnecting"
+elif [ $1 = "-es" ]; then
+    checkperm
+    $EDITOR $WPA_CONF
+    exit
+elif [ $1 = "-em" ]; then
+    $EDITOR $MINSECWIFI_CONF
+    exit
+else
+    usage
 fi
 
 # killing old processes
