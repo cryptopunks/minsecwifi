@@ -25,6 +25,55 @@ checkperm() {
     fi
 }
 
+killallprocess() {
+    # killing old processes
+    (kill -9 `ps aux | grep openvpn | awk {'print $2'}`) 2> /dev/null
+    (kill -9 `ps aux | grep wpa_supplicant | awk {'print $2'}`) 2> /dev/null
+    (kill -9 `ps aux | grep dhclient | awk {'print $2'}`) 2> /dev/null
+}
+
+unblock() {
+    echo "Unblock Wifi-device: "
+    rfkill unblock 0 && echo OK
+}
+
+wifi_down() {
+    echo "Wifi interface down: "
+    ifconfig $WIFI_DEV down && echo OK
+}
+
+change_mac() {
+    echo "Change MAC-address: "
+    macchanger -r  $WIFI_DEV && echo OK
+}
+
+wifi_up() {
+    echo "Wifi interface up:"
+    ifconfig $WIFI_DEV up && echo OK
+}
+
+connect_wifi() {
+    echo "Connecting Wifi: "
+    rm -f /var/run/wpa/$WIFI_DEV
+    wpa_supplicant -B -i $WIFI_DEV -c $WPA_CONF && echo OK
+}
+
+get_dhcp_address() {
+    echo "Get DHCP address:"
+    dhclient $WIFI_DEV && echo OK
+}
+
+rewrite_dns() {
+    echo "Rewrite DNS: "
+    echo -e $DNS > /etc/resolv.conf
+    echo OK
+}
+
+connect_vpn() {
+    echo "Connecting VPN: "
+    openvpn --config $OVPN_CONF && echo OK
+}
+
 if [ -f minsecwifi.conf ]; then
 . ./minsecwifi.conf
 else 
@@ -35,7 +84,7 @@ else
     exit
 fi
 
-
+# FIXME! зьмяніць на < 1
 if [ $# -ne 1 ]; then
     usage
 fi
@@ -49,9 +98,8 @@ elif [ $1 = "-c" ]; then
     echo "Connecting"
 elif [ $1 = "-k" ]; then
     checkperm
-    echo "kill wpa_supplicant process..."
-    #killall wpa_supplicant
-    kill -9 `ps axu | grep wpa_supplicant | awk '{print $2}'` && echo "killed" 
+    echo "kill wpa_supplicant, openvpn processes..."
+    killallprocess
     exit
 elif [ $1 = "-es" ]; then
     checkperm
@@ -64,33 +112,20 @@ else
     usage
 fi
 
-# killing old processes
-(kill -9 `ps aux | grep openvpn | awk {'print $2'}`) 2> /dev/null
-(kill -9 `ps aux | grep wpa_supplicant | awk {'print $2'}`) 2> /dev/null
-(kill -9 `ps aux | grep dhclient | awk {'print $2'}`) 2> /dev/null
+killallprocess
 
-echo "Unblock Wifi-device: "
-rfkill unblock 0 && echo OK
+unblock
 
-echo "Wifi interface down: "
-ifconfig $WIFI_DEV down && echo OK
+wifi_down
 
-echo "Change MAC-address: "
-macchanger -r  $WIFI_DEV && echo OK
+change_mac
 
-echo "Wifi interface up:"
-ifconfig $WIFI_DEV up && echo OK
+wifi_up
 
-echo "Connecting Wifi: "
-rm -f /var/run/wpa/$WIFI_DEV
-wpa_supplicant -B -i $WIFI_DEV -c $WPA_CONF && echo OK
+connect_wifi
 
-echo "Get DHCP address:"
-dhclient $WIFI_DEV && echo OK
+get_dhcp_address
 
-echo "Rewrite DNS: "
-echo -e $DNS > /etc/resolv.conf
-echo OK
+rewrite_dns 
 
-echo "Connecting VPN: "
-openvpn --config $OVPN_CONF && echo OK
+connect_vpn
