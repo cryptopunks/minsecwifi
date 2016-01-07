@@ -35,7 +35,9 @@ $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600
 and run **minsecwifi**:
 
 ```
-$ sudo ./minsecwifi
+$./minsecwifi
+Usage:
+./minsecwifi -s [scan networks] -c [connect] -k [kill process] -es [edit wpa_supplicant.conf] -em [edit minsecwifi.conf]
 ```
 
 ### Donations
