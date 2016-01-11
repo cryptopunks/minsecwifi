@@ -30,7 +30,8 @@ usage() {
           -rd, --rewrite-dns            rewrite dns servers
           -cv, --connect-vpn            connect to vpn server
           -xw, --example-wpasupplicant  show example config for wpa_supplicant
-          -xm, --example-minsecwifi     show example config for minsecwifi"
+          -xm, --example-minsecwifi     show example config for minsecwifi
+          -fp, --fix-permissions        fix permissions for wpa_supplicant.conf"
         exit
 }
 
@@ -65,6 +66,11 @@ show_example_wpasupplicant() {
         psk="password"
     }
    ' 
+}
+
+fixperm() {
+    echo "Fix permissions for wpa_supplicant.conf:"
+    chown root:root $WPA_CONF && sudo chmod 600 $WPA_CONF && echo "ok"
 }
 
 checkperm() {
@@ -201,6 +207,10 @@ elif [ $1 = "-xw" ] || [ $1 = "--example-wpasupplicant" ]; then
     exit
 elif [ $1 = "-xm" ] || [ $1 = "--example-minsecwifi" ]; then
     show_example_minsecwifi
+    exit
+elif [ $1 = "-fp" ] || [ $1 = "--fix-permissions" ]; then
+    checkperm
+    fixperm
     exit
 else
     usage

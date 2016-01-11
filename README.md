@@ -14,7 +14,13 @@ $ cd minsecwifi && mv minsecwifi.conf.sample minsecwifi.conf
 ```
 and edit "minsecwifi.conf".
 
-Creating **/etc/wpa_supplicant/wpa_supplicant.conf** (`minsecwifi --edit-wpasupplicant`) in the following format (`--example-wpasupplicant`):
+Creating **/etc/wpa_supplicant/wpa_supplicant.conf**:
+
+`$ sudo minsecwifi --edit-wpasupplicant`
+
+in the following format 
+
+`$ minsecwifi --example-wpasupplicant`:
 
 ```
 network={
@@ -31,6 +37,10 @@ Assign access rights:
 ```
 $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 ```
+
+Or:
+
+`$ sudo minsec --fix-permissions`
 
 and run **minsecwifi** with needed argument:
 
@@ -54,6 +64,7 @@ Usage:
           -cv, --connect-vpn            connect to vpn server
           -xw, --example-wpasupplicant  show example config for wpa_supplicant
           -xm, --example-minsecwifi     show example config for minsecwifi
+          -fp, --fix-permissions        fix permissions for wpa_supplicant.conf
 ```
 
 ### Donations
