@@ -35,11 +35,12 @@ $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600
 and run **minsecwifi** with needed argument:
 
 ```
-$ ./minsecwifi 
+$ ./minsecwifi
 Usage:
 ./minsecwifi [OPTION] 
           -s, --scan                    scan networks
-          -r, --run                     run all services
+          -r, --run                     run all services 
+                                        (variable START_SEQUENCE in minsecwifi.conf)
           -k, --killall                 kill all services
           -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
           -em, --edit-minsecwifi        edit minsecwifi.conf
@@ -51,6 +52,8 @@ Usage:
           -gd, --get-dhcp               get dhcp address
           -rd, --rewrite-dns            rewrite dns servers
           -cv, --connect-vpn            connect to vpn server
+          -xw, --example-wpasupplicant  show example config for wpa_supplicant
+          -xm, --example-minsecwifi     show example config for minsecwifi
 ```
 
 ### Donations
