@@ -16,7 +16,7 @@ fi
 echo -n "Copying "
 cp -v minsecwifi $INSTALLDIR
 # Replacing path to minsecwifi.conf
-sed -i s/'minsecwifi.conf'/'\/etc\/minsecwifi.conf'/ $INSTALLDIR/minsecwifi
+sed -i s/'.\/minsecwifi.conf'/'\/etc\/minsecwifi.conf'/ $INSTALLDIR/minsecwifi
 # Generate new config
 if [ ! -f /etc/minsecwifi.conf ]; then
     $INSTALLDIR/minsecwifi -xm > /etc/minsecwifi.conf

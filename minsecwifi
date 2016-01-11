@@ -6,7 +6,7 @@
 
 # Needed packages: openvpn wpasupplicant macchanger
 
-MINSECWIFI_CONF="minsecwifi.conf"
+MINSECWIFI_CONF="./minsecwifi.conf"
 
 if [ ! $EDITOR ]; then
     EDITOR=vim
@@ -127,7 +127,7 @@ connect_vpn() {
 
 check_conf() {
     if [ -f $MINSECWIFI_CONF ]; then
-    . ./$MINSECWIFI_CONF
+      source $MINSECWIFI_CONF
     else
         echo -e "I need configuration file \"$MINSECWIFI_CONF\"\n"
         echo -e "Please run:"
@@ -139,7 +139,7 @@ check_conf() {
     fi
     }
 
-# FIXME! зьмяніць на < 1
+# FIXME! replace < 1
 if [ $# -ne 1 ]; then
     usage
 fi
