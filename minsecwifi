@@ -125,15 +125,19 @@ connect_vpn() {
     openvpn --config $OVPN_CONF && echo OK
 }
 
-if [ -f minsecwifi.conf ]; then
-. ./minsecwifi.conf
-else 
-    echo -e "I need configuration file \"minsecwifi.conf\".\n"
-    echo -e "Please run:\n\n$ wget https://raw.githubusercontent.com/cryptopunks/minsecwifi/master/minsecwifi.conf.sample --no-check-certificate -O minsecwifi.conf"
-    echo -e "$ mv minsecwifi.conf.sample minsecwifi.conf\n"
-    echo "and edit \"minsecwifi.conf\""
-    exit
-fi
+check_conf() {
+    if [ -f $MINSECWIFI_CONF ]; then
+    . ./$MINSECWIFI_CONF
+    else
+        echo -e "I need configuration file \"$MINSECWIFI_CONF\"\n"
+        echo -e "Please run:"
+        echo -e "./minsecwifi --example-minsecwifi | sudo tee $MINSECWIFI_CONF"
+        echo
+        echo -e "And edit config:"
+        echo -e "$ sudo minsecwifi -em"
+        exit
+    fi
+    }
 
 # FIXME! зьмяніць на < 1
 if [ $# -ne 1 ]; then
@@ -141,6 +145,7 @@ if [ $# -ne 1 ]; then
 fi
 
 if [ $1 = "-s" ] || [ $1 = "--scan" ]; then
+    check_conf
     checkperm
     echo "Scan hotspots..."
     hotspots=`iw dev $WIFI_DEV scan | grep -i ssid | sed s/SSID://`
@@ -149,6 +154,7 @@ if [ $1 = "-s" ] || [ $1 = "--scan" ]; then
     for ssid in $hotspots; do echo "    $ssid"; done
     exit
 elif [ $1 = "-r" ] || [ $1 = "--run" ]; then
+    check_conf
     checkperm
     echo "Connecting"
     # run custom functions 
@@ -175,22 +181,27 @@ elif [ $1 = "-ub" ] || [ $1 = "--unblock" ]; then
     unblock
     exit
 elif [ $1 = "-id" ] || [ $1 = "--interface-down" ]; then
+    check_conf
     checkperm
     interface_down
     exit
 elif [ $1 = "-iu" ] || [ $1 = "--interface-up" ]; then
+    check_conf
     checkperm
     interface_up
     exit
 elif [ $1 = "-cm" ] || [ $1 = "--change-mac" ]; then
+    check_conf
     checkperm
     change_mac
     exit
 elif [ $1 = "-ch" ]  || [ $1 = "--connect-hotspot" ]; then
+    check_conf
     checkperm
     connect_hotspot
     exit
 elif [ $1 = "-gd" ] || [ $1 = "--get-dhcp" ]; then
+    check_conf
     checkperm
     get_dhcp_address
     exit
@@ -199,6 +210,7 @@ elif [ $1 = "-rd" ] || [ $1 = "--rewrite-dns" ]; then
     rewrite_dns
     exit
 elif [ $1 = "-cv" ] || [ $1 = "--connect-vpn" ]; then
+    check_conf
     checkperm
     connect_vpn
     exit
