@@ -15,24 +15,24 @@ fi
 usage() {
         echo "Usage:"
         echo "$0 [OPTION] 
-          -s, --scan                    scan networks
-          -r, --run                     run all services 
-                                        (variable START_SEQUENCE in minsecwifi.conf)
-          -k, --killall                 kill all services
-          -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
-          -em, --edit-minsecwifi        edit minsecwifi.conf
-          -ub, --unblock                unblock wifi adaptor
-          -iu, --interface-up           wifi interface down
-          -id, --interface-down         wifi interface up
-          -cm, --change-mac             change mac address
-          -ch, --connect-hotspot        connect to hotspot
-          -gd, --get-dhcp               get dhcp address
-          -rd, --rewrite-dns            rewrite dns servers
-          -cv, --connect-vpn            connect to vpn server
-          -xw, --example-wpasupplicant  show example config for wpa_supplicant
-          -xm, --example-minsecwifi     show example config for minsecwifi
-          -fp, --fix-permissions        fix permissions for wpa_supplicant.conf"
-        exit
+  -s, --scan                    scan networks
+  -r, --run                     run all services 
+                                (variable START_SEQUENCE in minsecwifi.conf)
+  -k, --killall                 kill all services
+  -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
+  -em, --edit-minsecwifi        edit minsecwifi.conf
+  -ub, --unblock                unblock wifi adaptor
+  -iu, --interface-up           wifi interface down
+  -id, --interface-down         wifi interface up
+  -cm, --change-mac             change mac address
+  -ch, --connect-hotspot        connect to hotspot
+  -gd, --get-dhcp               get dhcp address
+  -rd, --rewrite-dns            rewrite dns servers
+  -cv, --connect-vpn            connect to vpn server
+  -xw, --example-wpasupplicant  show example config for wpa_supplicant
+  -xm, --example-minsecwifi     show example config for minsecwifi
+  -fp, --fix-permissions        fix permissions for wpa_supplicant.conf"
+    exit
 }
 
 show_example_minsecwifi() {
