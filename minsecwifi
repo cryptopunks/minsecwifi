@@ -28,10 +28,43 @@ usage() {
           -ch, --connect-hotspot        connect to hotspot
           -gd, --get-dhcp               get dhcp address
           -rd, --rewrite-dns            rewrite dns servers
-          -cv, --connect-vpn            connect to vpn server"
-#          -ew, --example-wpasupplicant  get example config for wpa_supplicant
-#          -em, --example-minsecwifi     get example config for minsecwifi"
+          -cv, --connect-vpn            connect to vpn server
+          -xw, --example-wpasupplicant  show example config for wpa_supplicant
+          -xm, --example-minsecwifi     show example config for minsecwifi"
         exit
+}
+
+show_example_minsecwifi() {
+    echo '
+    minsecwifi.conf:
+
+    # Wifi device (run `ifconfig -a`)
+    WIFI_DEV="wlp3s0"
+    # Wpa_supplicant configuration file
+    WPA_CONF="/etc/wpa_supplicant/wpa_supplicant.conf"
+    # DNS-servers
+    DNS="nameserver 208.67.222.222\nnameserver 208.67.220.220"
+    # OpenVPN configuration file (for client)
+    OVPN_CONF="/etc/openvpn/client.ovpn"
+    # for run to all services (argument '-r')
+    START_SEQUENCE="killallprocess unblock interface_down change_mac interface_up connect_hotspot get_dhcp_address rewrite_dns connect_vpn"
+
+    ' 
+}
+
+show_example_wpasupplicant() {
+    echo '
+    wpa_supplicant.conf:
+
+    network={
+        ssid="access point 1"
+        psk="password"
+    }
+    network={
+        ssid="access point 2"
+        psk="password"
+    }
+   ' 
 }
 
 checkperm() {
@@ -162,6 +195,12 @@ elif [ $1 = "-rd" ] || [ $1 = "--rewrite-dns" ]; then
 elif [ $1 = "-cv" ] || [ $1 = "--connect-vpn" ]; then
     checkperm
     connect_vpn
+    exit
+elif [ $1 = "-xw" ] || [ $1 = "--example-wpasupplicant" ]; then
+    show_example_wpasupplicant
+    exit
+elif [ $1 = "-xm" ] || [ $1 = "--example-minsecwifi" ]; then
+    show_example_minsecwifi
     exit
 else
     usage
