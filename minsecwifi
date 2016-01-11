@@ -188,7 +188,9 @@ elif [ $1 = "-gd" ] || [ $1 = "--get-dhcp" ]; then
     exit
 elif [ $1 = "-rd" ] || [ $1 = "--rewrite-dns" ]; then
     checkperm
+    chattr -i /etc/resolv.conf
     rewrite_dns
+    chattr +i /etc/resolv.conf
     exit
 elif [ $1 = "-cv" ] || [ $1 = "--connect-vpn" ]; then
     checkperm
