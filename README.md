@@ -58,4 +58,4 @@ Usage:
 
 ### Donations
 
-If you want to show your appreciation, you can donate via [Bitcoin](http://cryptopunks.org/contacts/). Thanks!
+If you want to show your appreciation, you can donate via [Bitcoin](http://cryptopunks.org/donate/). Thanks!
