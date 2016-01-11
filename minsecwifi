@@ -36,36 +36,29 @@ usage() {
 }
 
 show_example_minsecwifi() {
-    echo '
-    minsecwifi.conf:
-
-    # Wifi device (run `ifconfig -a`)
-    WIFI_DEV="wlp3s0"
-    # Wpa_supplicant configuration file
-    WPA_CONF="/etc/wpa_supplicant/wpa_supplicant.conf"
-    # DNS-servers
-    DNS="nameserver 208.67.222.222\nnameserver 208.67.220.220"
-    # OpenVPN configuration file (for client)
-    OVPN_CONF="/etc/openvpn/client.ovpn"
-    # for run to all services (argument '-r')
-    START_SEQUENCE="killallprocess unblock interface_down change_mac interface_up connect_hotspot get_dhcp_address rewrite_dns connect_vpn"
-
+    echo '# Wifi device (run `ifconfig -a`)
+WIFI_DEV="wlp3s0"
+# Wpa_supplicant configuration file
+WPA_CONF="/etc/wpa_supplicant/wpa_supplicant.conf"
+# DNS-servers
+DNS="nameserver 208.67.222.222\nnameserver 208.67.220.220"
+# OpenVPN configuration file (for client)
+OVPN_CONF="/etc/openvpn/client.ovpn"
+# for run to all services (argument '-r')
+START_SEQUENCE="killallprocess unblock interface_down change_mac interface_up fixperm connect_hotspot get_dhcp_address rewrite_dns connect_vpn"
     ' 
 }
 
 show_example_wpasupplicant() {
-    echo '
-    wpa_supplicant.conf:
-
-    network={
-        ssid="access point 1"
+    echo 'network={
+	ssid="access point 1"
         psk="password"
-    }
-    network={
+}
+network={
         ssid="access point 2"
         psk="password"
-    }
-   ' 
+}
+' 
 }
 
 fixperm() {
@@ -167,7 +160,6 @@ elif [ $1 = "-ew" ] || [ $1 = "--edit-wpasupplicant" ]; then
     $EDITOR $WPA_CONF
     exit
 elif [ $1 = "-em" ] || [ $1 = "--edit-minsecwifi" ]; then
-    checkperm
     $EDITOR $MINSECWIFI_CONF
     exit
 elif [ $1 = "-ub" ] || [ $1 = "--unblock" ]; then
