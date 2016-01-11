@@ -93,7 +93,7 @@ $ git pull
 $ sudo ./install.sh
 ```
 
-## Deinstall
+## Deinstalling
 
 Run: 
 
