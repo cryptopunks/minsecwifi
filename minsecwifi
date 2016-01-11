@@ -16,7 +16,8 @@ usage() {
         echo "Usage:"
         echo "$0 [OPTION] 
           -s, --scan                    scan networks
-          -r, --run                     run all services
+          -r, --run                     run all services 
+                                        (variable START_SEQUENCE in minsecwifi.conf)
           -k, --killall                 kill all services
           -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
           -em, --edit-minsecwifi        edit minsecwifi.conf
