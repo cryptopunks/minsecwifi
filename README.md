@@ -4,41 +4,43 @@
 
 Minimalistic and secure Wifi-manager based by **wpa_supplicant**, **openvpn** and **macchanger**.
 
-## Installation and setup 
+## Installation and Setup
 
 ```
 $ sudo apt-get install openvpn wpasupplicant macchanger 
 $ git clone https://github.com/cryptopunks/minsecwifi && cd minsecwifi 
-```
-
-Creating config **minsecfiwi.conf**:
-```
-$ ./minsecwifi -xm > minsecwifi.conf
-```
-
-and edit:
 
 ```
-$ ./minsecwifi -em
+
+Run installer:
+
+```
+$ sudo ./install.sh
+```
+
+Edit **/etc/minsecwifi.conf**:
+
+```
+$ minsecwifi -em
 ```
 
 Creating new **/etc/wpa_supplicant/wpa_supplicant.conf**: 
 
 ```
-$ ./minsecwifi --example-wpasupplicant | sudo tee --append /etc/wpa_supplicant/wpa_supplicant.conf
+$ minsecwifi --example-wpasupplicant | sudo tee --append /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
 Editing **/etc/wpa_supplicant/wpa_supplicant.conf**:
 
 ```
-$ sudo ./minsecwifi --edit-wpasupplicant`
+$ sudo minsecwifi --edit-wpasupplicant`
 
 ```
 
 Assign access rights:
 
 ```
-$ sudo ./minsecwifi --fix-permissions
+$ sudo minsecwifi --fix-permissions
 ```
 
 Or:
@@ -47,11 +49,12 @@ Or:
 $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
+## Use
 
 and run **minsecwifi** with needed argument:
 
 ```
-$ ./minsecwifi
+$ minsecwifi
 Usage:
 ./minsecwifi [OPTION] 
           -s, --scan                    scan networks
@@ -71,6 +74,32 @@ Usage:
           -xw, --example-wpasupplicant  show example config for wpa_supplicant
           -xm, --example-minsecwifi     show example config for minsecwifi
           -fp, --fix-permissions        fix permissions for wpa_supplicant.conf
+```
+
+## Upgrading
+
+Run: 
+
+```
+$ git clone https://github.com/cryptopunks/minsecwifi && cd minsecwifi
+$ sudo ./install.sh
+```
+
+or 
+
+```
+$ cd <minsecwifi_local_git_repo>
+$ git init
+$ sudo ./install.sh
+```
+
+## Deinstall
+
+Run: 
+
+```
+$ cd <minsecwifi_local_git_repo>
+$ sudo ./uninstall.sh
 ```
 
 ### Donations
