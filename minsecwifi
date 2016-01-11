@@ -14,7 +14,22 @@ fi
 
 usage() {
         echo "Usage:"
-        echo "$0 -s [scan networks] -c [connect] -k [kill process] -es [edit wpa_supplicant.conf] -em [edit minsecwifi.conf]"
+        echo "$0 [OPTION] 
+          -s, --scan                    scan networks
+          -r, --run                     run all services
+          -k, --killall                 kill all services
+          -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
+          -em, --edit-minsecwifi        edit minsecwifi.conf
+          -ub, --unblock                unblock wifi adaptor
+          -id, --interface-up           wifi interface down
+          -iu, --interface-down         wifi interface up
+          -cm, --change-mac             change mac address
+          -ch, --connect-hotspot        connect to hotspot
+          -gd, --get-dhcp               get dhcp address
+          -rd, --rewrite-dns            rewrite dns servers
+          -cv, --connect-vpn            connect to vpn server"
+#          -ew, --example-wpasupplicant  get example config for wpa_supplicant
+#          -em, --example-minsecwifi     get example config for minsecwifi"
         exit
 }
 
@@ -37,7 +52,7 @@ unblock() {
     rfkill unblock 0 && echo OK
 }
 
-wifi_down() {
+interface_down() {
     echo "Wifi interface down: "
     ifconfig $WIFI_DEV down && echo OK
 }
@@ -47,12 +62,12 @@ change_mac() {
     macchanger -r  $WIFI_DEV && echo OK
 }
 
-wifi_up() {
+interface_up() {
     echo "Wifi interface up:"
     ifconfig $WIFI_DEV up && echo OK
 }
 
-connect_wifi() {
+connect_hotspot() {
     echo "Connecting Wifi: "
     rm -f /var/run/wpa/$WIFI_DEV
     wpa_supplicant -B -i $WIFI_DEV -c $WPA_CONF && echo OK
@@ -65,8 +80,7 @@ get_dhcp_address() {
 
 rewrite_dns() {
     echo "Rewrite DNS: "
-    echo -e $DNS > /etc/resolv.conf
-    echo OK
+    echo -e $DNS > /etc/resolv.conf && echo OK
 }
 
 connect_vpn() {
@@ -89,43 +103,67 @@ if [ $# -ne 1 ]; then
     usage
 fi
 
-if [ $1 = "-s" ]; then
+if [ $1 = "-s" ] || [ $1 = "--scan" ]; then
     checkperm
     iw dev $WIFI_DEV scan | grep -i ssid | sed s/SSID://
     exit
-elif [ $1 = "-c" ]; then
+elif [ $1 = "-r" ] || [ $1 = "--run" ]; then
     checkperm
     echo "Connecting"
-elif [ $1 = "-k" ]; then
+    # run custom functions 
+    if [ ! -z "$START_SEQUENCE" ]; then
+        for run_process in $START_SEQUENCE; do $run_process; done
+    else
+        echo "Needing options START_SEQUENCE in $MINSECWIFI_CONF"
+        exit
+    fi
+elif [ $1 = "-k" ] || [ $1 = "--killall" ]; then
     checkperm
     echo "kill wpa_supplicant, openvpn processes..."
     killallprocess
     exit
-elif [ $1 = "-es" ]; then
+elif [ $1 = "-ew" ] || [ $1 = "--edit-wpasupplicant" ]; then
     checkperm
     $EDITOR $WPA_CONF
     exit
-elif [ $1 = "-em" ]; then
+elif [ $1 = "-em" ] || [ $1 = "--edit-minsecwifi" ]; then
+    checkperm
     $EDITOR $MINSECWIFI_CONF
+    exit
+elif [ $1 = "-ub" ] || [ $1 = "--unblock" ]; then
+    checkperm
+    unblock
+    exit
+elif [ $1 = "-id" ] || [ $1 = "--interface-down" ]; then
+    checkperm
+    interface_down
+    exit
+elif [ $1 = "-iu" ] || [ $1 = "--interface-up" ]; then
+    checkperm
+    interface_up
+    exit
+elif [ $1 = "-cm" ] || [ $1 = "--change-mac" ]; then
+    checkperm
+    change_mac
+    exit
+elif [ $1 = "-ch" ]  || [ $1 = "--connect-hotspot" ]; then
+    checkperm
+    connect_hotspot
+    exit
+elif [ $1 = "-gd" ] || [ $1 = "--get-dhcp" ]; then
+    checkperm
+    get_dhcp_address
+    exit
+elif [ $1 = "-rd" ] || [ $1 = "--rewrite-dns" ]; then
+    checkperm
+    rewrite_dns
+    exit
+elif [ $1 = "-cv" ] || [ $1 = "--connect-vpn" ]; then
+    checkperm
+    connect_vpn
     exit
 else
     usage
 fi
 
-killallprocess
 
-unblock
-
-wifi_down
-
-change_mac
-
-wifi_up
-
-connect_wifi
-
-get_dhcp_address
-
-rewrite_dns 
-
-connect_vpn
