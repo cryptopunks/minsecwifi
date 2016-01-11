@@ -58,4 +58,4 @@ Usage:
 
 ### Donations
 
-If you want to show your appreciation, you can donate via Bitcoin: *1NYYFoJiRPnkmFbcv5kYLqwsweix1cVmBT*. Thanks!
+If you want to show your appreciation, you can donate via Bitcoin: **1NYYFoJiRPnkmFbcv5kYLqwsweix1cVmBT**. Thanks!
