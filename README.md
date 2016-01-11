@@ -14,7 +14,7 @@ $ cd minsecwifi && mv minsecwifi.conf.sample minsecwifi.conf
 ```
 and edit "minsecwifi.conf".
 
-Creating **/etc/wpa_supplicant/wpa_supplicant.conf** in the following format:
+Creating **/etc/wpa_supplicant/wpa_supplicant.conf** (`minsecwifi --edit-wpasupplicant`) in the following format (`--example-wpasupplicant`):
 
 ```
 network={
