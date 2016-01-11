@@ -142,7 +142,11 @@ fi
 
 if [ $1 = "-s" ] || [ $1 = "--scan" ]; then
     checkperm
-    iw dev $WIFI_DEV scan | grep -i ssid | sed s/SSID://
+    echo "Scan hotspots..."
+    hotspots=`iw dev $WIFI_DEV scan | grep -i ssid | sed s/SSID://`
+    echo "Available hotspots:"
+    echo 
+    for ssid in $hotspots; do echo "    $ssid"; done
     exit
 elif [ $1 = "-r" ] || [ $1 = "--run" ]; then
     checkperm
