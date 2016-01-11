@@ -35,7 +35,7 @@ $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600
 and run **minsecwifi** with needed argument:
 
 ```
-$ ./minsecwifi                                                                                                                                               [19:04:44]
+$ ./minsecwifi 
 Usage:
 ./minsecwifi [OPTION] 
           -s, --scan                    scan networks
