@@ -32,12 +32,25 @@ Assign access rights:
 $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600 /etc/wpa_supplicant/wpa_supplicant.conf
 ```
 
-and run **minsecwifi**:
+and run **minsecwifi** with needed argument:
 
 ```
-$./minsecwifi
+$ ./minsecwifi                                                                                                                                               [19:04:44]
 Usage:
-./minsecwifi -s [scan networks] -c [connect] -k [kill process] -es [edit wpa_supplicant.conf] -em [edit minsecwifi.conf]
+./minsecwifi [OPTION] 
+          -s, --scan                    scan networks
+          -r, --run                     run all services
+          -k, --killall                 kill all services
+          -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
+          -em, --edit-minsecwifi        edit minsecwifi.conf
+          -ub, --unblock                unblock wifi adaptor
+          -id, --interface-up           wifi interface down
+          -iu, --interface-down         wifi interface up
+          -cm, --change-mac             change mac address
+          -ch, --connect-hotspot        connect to hotspot
+          -gd, --get-dhcp               get dhcp address
+          -rd, --rewrite-dns            rewrite dns servers
+          -cv, --connect-vpn            connect to vpn server
 ```
 
 ### Donations
