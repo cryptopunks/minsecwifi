@@ -21,7 +21,7 @@ $ sudo ./install.sh
 Edit **/etc/minsecwifi.conf**:
 
 ```
-$ minsecwifi -em
+$ sudo minsecwifi -em
 ```
 
 Creating new **/etc/wpa_supplicant/wpa_supplicant.conf**: 
@@ -51,7 +51,7 @@ $ sudo chown root:root /etc/wpa_supplicant/wpa_supplicant.conf && sudo chmod 600
 
 ## Use
 
-and run **minsecwifi** with needed argument:
+Run **minsecwifi** with needed argument:
 
 ```
 $ minsecwifi
@@ -89,7 +89,7 @@ or
 
 ```
 $ cd <minsecwifi_local_git_repo>
-$ git init
+$ git pull 
 $ sudo ./install.sh
 ```
 
