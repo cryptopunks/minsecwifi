@@ -45,8 +45,8 @@ Usage:
           -ew, --edit-wpasupplicant     edit wpa_supplicant.conf
           -em, --edit-minsecwifi        edit minsecwifi.conf
           -ub, --unblock                unblock wifi adaptor
-          -id, --interface-up           wifi interface down
-          -iu, --interface-down         wifi interface up
+          -iu, --interface-up           wifi interface down
+          -id, --interface-down         wifi interface up
           -cm, --change-mac             change mac address
           -ch, --connect-hotspot        connect to hotspot
           -gd, --get-dhcp               get dhcp address
