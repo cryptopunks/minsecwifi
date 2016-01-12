@@ -49,6 +49,26 @@ START_SEQUENCE="killallprocess unblock interface_down change_mac interface_up fi
     ' 
 }
 
+check_needed_programs() {
+    notinstalled=""
+    # without sudo
+    PATH=$PATH:/usr/sbin:/sbin
+    command -v wpa_supplicant >/dev/null 2>&1 || notinstalled="wpa_supplicant"
+    command -v openvpn >/dev/null 2>&1 || notinstalled="$notinstalled openvpn"
+    command -v macchanger > /dev/null 2>&1 || notinstalled="$notinstalled macchanger"
+    command -v dhclient > /dev/null 2>&1 || notinstalled="$notinstalled dhclient"
+
+    if [ ! -z "$notinstalled" ]; then
+        for progname in $notinstalled; do
+            echo "The program '$progname' is currently not installed."
+        done
+        echo
+        echo "Please install this packages in your system."
+        echo "Aborting."
+        exit 1
+    fi
+}
+
 show_example_wpasupplicant() {
     echo 'network={
 	ssid="access point 1"
@@ -143,6 +163,8 @@ check_conf() {
 if [ $# -ne 1 ]; then
     usage
 fi
+
+check_needed_programs
 
 if [ $1 = "-s" ] || [ $1 = "--scan" ]; then
     check_conf
