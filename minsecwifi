@@ -82,8 +82,9 @@ network={
 }
 
 fixperm() {
+    check_conf
     echo "Fix permissions for wpa_supplicant.conf:"
-    chown root:root $WPA_CONF && sudo chmod 600 $WPA_CONF && echo "ok"
+    chown root:root $WPA_CONF && chmod 600 $WPA_CONF && echo "ok"
 }
 
 checkperm() {
