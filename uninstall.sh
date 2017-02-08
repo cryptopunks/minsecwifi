@@ -7,7 +7,7 @@
 INSTALLDIR="/usr/bin"
 
 # check root
-if [[ "$USER" != 'root' ]]; then
+if [ "$USER" != 'root' ]; then
     echo "Sorry, you need to run this as root"
     exit
 fi
