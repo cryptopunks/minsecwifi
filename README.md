@@ -104,4 +104,4 @@ $ sudo ./uninstall.sh
 
 ### Donations
 
-If you want to show your appreciation, you can donate via Bitcoin: **1NYYFoJiRPnkmFbcv5kYLqwsweix1cVmBT**. Thanks!
+If you want to show your appreciation, you can donate via Bitcoin: **bc1qs7v6vfp0xpe2slcpwlhftdeqj2w92r3pkykjn6**. Thanks!
